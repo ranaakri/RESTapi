@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/employee")
 public class EmployeeController {
+
+    @Value("${swagger-server-url}")
+    private String swaggerServerUrl;
+
+    @Value("${springdoc.swagger-ui.path}")
+    private String swaggerUIPath;
 
     private final EmployeeServices employeeServices;
 
@@ -40,7 +47,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeServices.getEmployeeList());
     }
 
-    @GetMapping(value = "/{id}", params = "version=1", headers = "X.1", produces = "application/vnd.company.app-v1+json")
+    @GetMapping(value = "/{id}", params = "version=1")
     @Operation(
             summary = "Get Employee by id",
             description = "Fetches employee by its unique id",
@@ -54,7 +61,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeServices.getEmployee(id));
     }
 
-    @GetMapping(value = "/{id}", params = "version=2", headers = "X.2", produces = "application/vnd.company.app-v2+json")
+    @GetMapping(value = "/{id}", params = "version=2")
     @Operation(
             summary = "Get Employee by id",
             description = "Fetches employee by its unique id",

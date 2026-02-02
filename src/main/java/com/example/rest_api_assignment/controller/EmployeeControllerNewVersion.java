@@ -27,7 +27,7 @@ public class EmployeeControllerNewVersion {
         this.employeeServices = employeeServices;
     }
 
-    @GetMapping(value = "/{id}", params = "version=1", headers = "X.1", produces = "application/vnd.company.app-v1+json")
+    @GetMapping(value = "/{id}")
     @Operation(
             summary = "Get Employee by id",
             description = "Fetches employee by its unique id",
@@ -38,20 +38,6 @@ public class EmployeeControllerNewVersion {
             }
     )
     public ResponseEntity<EmployeeResDto> getEmployee(@PathVariable long id){
-        return ResponseEntity.ok(employeeServices.getEmployee(id));
-    }
-
-    @GetMapping(value = "/{id}", params = "version=2", headers = "X.2", produces = "application/vnd.company.app-v2+json")
-    @Operation(
-            summary = "Get Employee by id",
-            description = "Fetches employee by its unique id",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Employee Fetched Successfully"),
-                    @ApiResponse(responseCode = "404", description = "Employee not found"),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
-            }
-    )
-    public ResponseEntity<EmployeeResDto> getEmployeeV2(@PathVariable long id){
         return ResponseEntity.ok(employeeServices.getEmployee(id));
     }
 }
