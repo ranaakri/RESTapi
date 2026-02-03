@@ -15,27 +15,6 @@ import java.util.List;
 @Configuration
 public class OpenAPIConfig {
 
-    @Value("${swagger-server-description}")
-    private String swaggerServerDescription;
-
-    @Value("${swagger-server-url}")
-    private String swaggerServerUrl;
-
-    @Value("${swagger-contact-email}")
-    private String swaggerContactEmail;
-
-    @Value("${swagger-contact-name}")
-    private String swaggerContactName;
-
-    @Value("${swagger-contact-url}")
-    private String swaggerContactUrl;
-
-    @Value("${swagger-licence-name}")
-    private String swaggerLicenceName;
-
-    @Value("${swagger-licence-url}")
-    private String swaggerLicenceUrl;
-
     @Value("${swagger-info-title}")
     private String swaggerInfoTitle;
 
@@ -52,23 +31,11 @@ public class OpenAPIConfig {
     public OpenAPI openAPI() {
 
         Server server = new Server();
-        server.setUrl(swaggerServerUrl);
-        server.setDescription(swaggerServerDescription);
-
-        Contact contact = new Contact();
-        contact.setEmail(swaggerContactEmail);
-        contact.setName(swaggerContactName);
-        contact.setUrl(swaggerContactUrl);
-
-        License mitLicense = new License().name(swaggerLicenceName).url(swaggerLicenceUrl);
-
         Info info = new Info()
                 .title(swaggerInfoTitle)
                 .version(swaggerInfoVersion)
-                .contact(contact)
                 .description(swaggerInfoDescription)
-                .termsOfService(swaggerInfoTerms)
-                .license(mitLicense);
+                .termsOfService(swaggerInfoTerms);
 
         return new OpenAPI().info(info).servers(List.of(server));
     }

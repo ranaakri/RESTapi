@@ -40,4 +40,24 @@ public class EmployeeControllerNewVersion {
     public ResponseEntity<EmployeeResDto> getEmployee(@PathVariable long id){
         return ResponseEntity.ok(employeeServices.getEmployee(id));
     }
+
+    @GetMapping(value = "/hello", headers = "VERSION=X.0.1")
+    public ResponseEntity<String> getHelloV1(){
+        return ResponseEntity.ok("Hello V1");
+    }
+
+    @GetMapping(value = "/hello", headers = "VERSION=X.0.2")
+    public ResponseEntity<String> getHelloV2(){
+        return ResponseEntity.ok("Hello V2");
+    }
+
+    @GetMapping(value = "/hello/produces", produces = "application/vnd.myapp.v1+json")
+    public ResponseEntity<String> getHelloProV1(){
+        return ResponseEntity.ok("Hello V1");
+    }
+
+    @GetMapping(value = "/hello/produces", produces = "application/vnd.myapp.v2+json")
+    public ResponseEntity<String> getHelloProV2(){
+        return ResponseEntity.ok("Hello V2");
+    }
 }
