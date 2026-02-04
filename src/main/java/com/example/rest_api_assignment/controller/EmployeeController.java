@@ -21,12 +21,6 @@ import java.util.Optional;
 @RequestMapping("api/v1/employee")
 public class EmployeeController {
 
-    @Value("${swagger-server-url}")
-    private String swaggerServerUrl;
-
-    @Value("${springdoc.swagger-ui.path}")
-    private String swaggerUIPath;
-
     private final EmployeeServices employeeServices;
 
     public EmployeeController(EmployeeServices employeeServices)
@@ -34,6 +28,7 @@ public class EmployeeController {
         this.employeeServices = employeeServices;
     }
 
+    //Fetch List of Employees
     @GetMapping("/list")
     @Operation(
             summary = "Get List of employees",
@@ -47,6 +42,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeServices.getEmployeeList());
     }
 
+    //Fetch Employee by Id Version 1 using Param versioning
     @GetMapping(value = "/{id}", params = "version=1")
     @Operation(
             summary = "Get Employee by id",
@@ -61,6 +57,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeServices.getEmployee(id));
     }
 
+    //Fetch Employee by Id Version 2 using Param Versioning
     @GetMapping(value = "/{id}", params = "version=2")
     @Operation(
             summary = "Get Employee by id",
@@ -75,6 +72,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeServices.getEmployee(id));
     }
 
+    //Update Employee
     @PutMapping("/{id}")
     @Operation(
             summary = "Update Employee by id",
@@ -89,6 +87,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeServices.updateEmployee(id, employee));
     }
 
+    //Update Department of an Employee
     @PatchMapping("/{id}")
     @Operation(
             summary = "Patch Employee department by id",
@@ -103,6 +102,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeServices.updateDepartment(id, department));
     }
 
+    //Add new Employee
     @PostMapping("/add")
     @Operation(
             summary = "Adds Employee",
@@ -117,6 +117,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeServices.addEmployee(employee),HttpStatus.CREATED);
     }
 
+    //Delete Employee by Id
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Delete Employee by id",

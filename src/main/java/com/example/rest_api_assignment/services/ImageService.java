@@ -30,22 +30,28 @@ public class ImageService {
         this.modelMapper = modelMapper;
     }
 
+    //Upload Profile image of employee
     public EmployeeResDto upload(long id, MultipartFile file) throws IOException {
 
+        //Throws exception if file is empty
         if(file == null || file.isEmpty()){
             throw new RuntimeException("File is empty");
         }
-        Path uploadPath = Paths.get(Upload_DIR);
-        Files.createDirectories(uploadPath);
 
+        //Throws exception if employee id not found
+        EmployeeInfo emp = employeeInfoRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
+
+        Path uploadPath = Paths.get(Upload_DIR);
+//        Files.createDirectories(uploadPath);
+
+        //Creating new file name with id
         String fname = id + "_" + file.getOriginalFilename();
         Path path = uploadPath.resolve(fname);
 
-
+        //Adding file to server
         Files.write(path, file.getBytes());
 
-        EmployeeInfo emp = employeeInfoRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
         emp.setProfile_img_path(fname);
 
         employeeInfoRepo.save(emp);
@@ -53,10 +59,15 @@ public class ImageService {
         return modelMapper.map(emp, EmployeeResDto.class);
     }
 
+    //Get Employee profile image
+    //Checking into cache by employee id
     @Cacheable(value = "image", key = "#id")
     public byte[] getProfile(long id) throws IOException{
+
+        //Throws error if employee id not found
         EmployeeInfo emp = employeeInfoRepo.findById(id)
                 .orElseThrow(() ->  new ResourceNotFoundException("Not Found"));
+
         return Files.readAllBytes(Paths.get(Upload_DIR , emp.getProfile_img_path()));
     }
 }

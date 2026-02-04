@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+//Employee Controller Version 2
 @RequestMapping("api/v2/employee")
 public class EmployeeControllerNewVersion {
 
@@ -27,6 +28,7 @@ public class EmployeeControllerNewVersion {
         this.employeeServices = employeeServices;
     }
 
+    //Get Employee by Id
     @GetMapping(value = "/{id}")
     @Operation(
             summary = "Get Employee by id",
@@ -41,6 +43,7 @@ public class EmployeeControllerNewVersion {
         return ResponseEntity.ok(employeeServices.getEmployee(id));
     }
 
+    //Versioning example 3
     @GetMapping(value = "/hello", headers = "VERSION=X.0.1")
     public ResponseEntity<String> getHelloV1(){
         return ResponseEntity.ok("Hello V1");
@@ -51,6 +54,8 @@ public class EmployeeControllerNewVersion {
         return ResponseEntity.ok("Hello V2");
     }
 
+
+    //Versioning example 4
     @GetMapping(value = "/hello/produces", produces = "application/vnd.myapp.v1+json")
     public ResponseEntity<String> getHelloProV1(){
         return ResponseEntity.ok("Hello V1");

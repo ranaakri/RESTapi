@@ -26,11 +26,13 @@ public class ImageUploadController {
         this.imageService = imageService;
     }
 
+    //Upload Profile image with employee id
     @PostMapping("/{id}")
     public ResponseEntity<EmployeeResDto> uploadImage(@PathVariable long id, @RequestParam MultipartFile file) throws IOException {
         return new ResponseEntity<>(imageService.upload(id, file),HttpStatus.OK);
     }
 
+    //Fetch Profile Image by Employee Id
     @GetMapping("/{id}")
     public ResponseEntity<byte[]> get(@PathVariable long id) throws IOException{
         return ResponseEntity.ok()

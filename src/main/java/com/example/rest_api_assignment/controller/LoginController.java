@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class LoginController {
 
+    //Adds Http Only Cookie
     @PostMapping("/login")
     public ResponseEntity<String> login(HttpServletResponse response)
     {
